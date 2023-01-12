@@ -1,6 +1,10 @@
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
+github.com/golang-infrastructure/go-iterator v0.0.0-20221215192756-3ace4e15c841 h1:VwLy578wsRB2DYYd8ECuNvBNGV7bpfL+gB6cNzUHvAY=
+github.com/golang-infrastructure/go-iterator v0.0.0-20221215192756-3ace4e15c841/go.mod h1:Guf14ZZ7f7qiE0YpZbUkICcm7LWc3nrn3/gDObT//WI=
+github.com/golang-infrastructure/go-iterator v0.0.0-20230112065131-1d82695f2289 h1:BYyz5BZuXOYSfEGyJKjMQKPsfEYazKixHFpyLOE/+3k=
+github.com/golang-infrastructure/go-iterator v0.0.0-20230112065131-1d82695f2289/go.mod h1:Guf14ZZ7f7qiE0YpZbUkICcm7LWc3nrn3/gDObT//WI=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
