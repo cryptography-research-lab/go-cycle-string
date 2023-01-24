@@ -64,16 +64,16 @@ func TestCycleString_MarshalJSON(t *testing.T) {
 	s := "CC是个中国人"
 	cycleString := NewCycleString(s)
 	b, err := cycleString.MarshalJSON()
-	assert.Equal(t, []byte("{\"s\":\"CC是个中国人\"}"), b)
+	assert.Equal(t, []byte("{\"baseString\":\"CC是个中国人\"}"), b)
 	assert.Nil(t, err)
 }
 
 func TestCycleString_UnmarshalJSON(t *testing.T) {
-	s := "{\"s\":\"CC是个中国人\"}"
+	s := "{\"baseString\":\"CC是个中国人\"}"
 	cycleString := &CycleString{}
 	err := json.Unmarshal([]byte(s), &cycleString)
 	assert.Nil(t, err)
-	assert.Equal(t, "CC是个中国人", cycleString.s)
+	assert.Equal(t, "CC是个中国人", cycleString.baseString)
 }
 
 func TestNewCycleString(t *testing.T) {

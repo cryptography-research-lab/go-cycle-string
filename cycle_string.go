@@ -8,10 +8,12 @@ import (
 
 // CycleString 循环字符串
 type CycleString struct {
+
 	// 原始的字符串，就是对这个字符串进行周期重复
-	s string
+	baseString string
+
 	// 原始字符串的字符表示形式，用于一些中文场景的处理
-	runeSlice []rune
+	baseStringRuneSlice []rune
 }
 
 var _ json.Marshaler = &CycleString{}
@@ -19,10 +21,10 @@ var _ json.Unmarshaler = &CycleString{}
 var _ iterator.Iterable[rune] = &CycleString{}
 
 // NewCycleString 创建一个循环字符串
-func NewCycleString(s string) *CycleString {
+func NewCycleString(baseString string) *CycleString {
 	return &CycleString{
-		s:         s,
-		runeSlice: []rune(s),
+		baseString:          baseString,
+		baseStringRuneSlice: []rune(baseString),
 	}
 }
 
@@ -30,12 +32,12 @@ func NewCycleString(s string) *CycleString {
 
 // RealRuneLength 返回真实的字符长度
 func (x *CycleString) RealRuneLength() int {
-	return len(x.runeSlice)
+	return len(x.baseStringRuneSlice)
 }
 
 // RealByteLength 返回真实的字节长度
 func (x *CycleString) RealByteLength() int {
-	return len(x.s)
+	return len(x.baseString)
 }
 
 // ------------------------------------------------- --------------------------------------------------------------------
@@ -47,14 +49,20 @@ func (x *CycleString) At(index int) byte {
 
 // ByteAt 获取给定下标的字节，会按照字节长度获取
 func (x *CycleString) ByteAt(index int) byte {
-	targetIndex := index % len(x.s)
-	return x.s[targetIndex]
+	if index < 0 {
+		panic("Out of Index")
+	}
+	targetIndex := index % len(x.baseString)
+	return x.baseString[targetIndex]
 }
 
 // RuneAt 获取给定下标的字符，会按照字符长度计算下标
 func (x *CycleString) RuneAt(index int) rune {
-	targetIndex := index % len(x.runeSlice)
-	return x.runeSlice[targetIndex]
+	if index < 0 {
+		panic("Out of Index")
+	}
+	targetIndex := index % len(x.baseStringRuneSlice)
+	return x.baseStringRuneSlice[targetIndex]
 }
 
 // CharAt 返回给定位置的字符，同RuneAt
@@ -103,15 +111,18 @@ func (x *CycleString) Iterator() iterator.Iterator[rune] {
 
 // 转为string的时候只返回原始的字符串
 func (x *CycleString) String() string {
-	return x.s
+	return x.baseString
 }
 
 // ------------------------------------------------- --------------------------------------------------------------------
 
+// CycleStringBaseStringJsonFieldName JSON序列化后存储真实字符串的字段名称，用于让序列化后的JSON能够具有一定的辨识和阅读性
+const CycleStringBaseStringJsonFieldName = "CycleStringBaseString"
+
 // MarshalJSON JSON序列化
 func (x *CycleString) MarshalJSON() ([]byte, error) {
 	m := make(map[string]string)
-	m["s"] = x.s
+	m[CycleStringBaseStringJsonFieldName] = x.baseString
 	return json.Marshal(m)
 }
 
@@ -122,7 +133,8 @@ func (x *CycleString) UnmarshalJSON(bytes []byte) error {
 	if err != nil {
 		return err
 	}
-	x.s = m["s"]
+	x.baseString = m[CycleStringBaseStringJsonFieldName]
+	x.baseStringRuneSlice = []rune(x.baseString)
 	return nil
 }
 
