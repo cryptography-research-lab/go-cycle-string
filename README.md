@@ -115,7 +115,7 @@ func main() {
 
 ## 3.5 迭代器模式
 
-`CycleString`有一个迭代器模式的实现`CycleStringIterator`，通过`Iterator`方法来获取：
+`CycleString`有两个迭代器模式的实现`CycleStringByteIterator`和`CycleStringRuneIterator`，通过`ByteIterator`和`RuneIterator`方法来获取：
 
 ```go
 package main
@@ -129,15 +129,16 @@ import (
 func main() {
 
 	cycleString := cycle_string.NewCycleString("CC11001100")
-	iterator := cycleString.Iterator()
+	iterator := cycleString.RuneIterator()
+
+	fmt.Println(string(iterator.NextN(3)))
+
 	for iterator.Next() {
 		fmt.Println(string(iterator.Value()))
 		time.Sleep(time.Millisecond * 100)
 	}
 	// Output:
-	// C
-	// C
-	// 1
+	// CC1
 	// 1
 	// 0
 	// 0

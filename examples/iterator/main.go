@@ -9,15 +9,16 @@ import (
 func main() {
 
 	cycleString := cycle_string.NewCycleString("CC11001100")
-	iterator := cycleString.Iterator()
+	iterator := cycleString.RuneIterator()
+
+	fmt.Println(string(iterator.NextN(3)))
+
 	for iterator.Next() {
 		fmt.Println(string(iterator.Value()))
 		time.Sleep(time.Millisecond * 100)
 	}
 	// Output:
-	// C
-	// C
-	// 1
+	// CC1
 	// 1
 	// 0
 	// 0
