@@ -2,7 +2,6 @@ package cycle_string
 
 import (
 	"encoding/json"
-	"github.com/golang-infrastructure/go-iterator"
 	"strings"
 )
 
@@ -18,7 +17,6 @@ type CycleString struct {
 
 var _ json.Marshaler = &CycleString{}
 var _ json.Unmarshaler = &CycleString{}
-var _ iterator.Iterable[rune] = &CycleString{}
 
 // NewCycleString 创建一个循环字符串
 func NewCycleString(baseString string) *CycleString {
@@ -102,9 +100,14 @@ func (x *CycleString) SubStringRune(from, to int) string {
 
 // ------------------------------------------------- --------------------------------------------------------------------
 
-// Iterator 返回一个当前对象的迭代器，当然这个迭代器是没有尽头的
-func (x *CycleString) Iterator() iterator.Iterator[rune] {
-	return NewCycleStringIterator(x)
+// RuneIterator 返回一个当前对象的字符迭代器，当然这个迭代器是没有尽头的
+func (x *CycleString) RuneIterator() *CycleStringRuneIterator {
+	return NewCycleStringRuneIterator(x)
+}
+
+// ByteIterator 返回一个当前对象的字节迭代器，当然这个迭代器是没有尽头的
+func (x *CycleString) ByteIterator() *CycleStringByteIterator {
+	return NewCycleStringByteIterator(x)
 }
 
 // ------------------------------------------------- --------------------------------------------------------------------
